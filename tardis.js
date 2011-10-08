@@ -76,7 +76,8 @@ tardis.ajax = function(options){
 		type: options.type || "GET",
 		timeout: options.timeout || 8000,
 		success: options.success || function(){},
-		error: options.error || function(){}
+		error: options.error || function(){},
+		data: options.data || {}
 	};
 	
 	setTimeout(function(){
@@ -103,10 +104,16 @@ tardis.ajax = function(options){
 		return isxml ? xhr.responseXML : xhr.responseText;
 	};
 	
-	var serialize = function(){};
+	var serialize = function(){
+		var ser = [];
+		for(var key in options.data){
+			ser.push( key + "=" + encodeURIComponent(options.data[key]) );
+		};
+		return "?" + ser.join("&");
+	};
 	
 	var xhr = new XMLHttpRequest();
-	xhr.open(options.type, options.url, true);
+	xhr.open(options.type, options.url + serialize(), true);
 	xhr.onreadystatechange = function(){
 		if(xhr.readyState === 4){
 			var valid = checkHttp();
