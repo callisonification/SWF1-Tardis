@@ -30,6 +30,7 @@ tardis.prototype = {
 				this.style[prop] = props[prop];	
 			});
 		};
+		return this;
 	},
 	
 	hasClass: function(name){
@@ -48,14 +49,50 @@ tardis.prototype = {
 			if( !tardis(this).hasClass(name) ){
 				this.className += " " + name;
 			};	
-		});	
+		});
+		return this;
 	},
 	
 	removeClass: function(name){
 		this.each(function(){
 			var pattern = new RegExp("(^| )" + name + "( |$)");
 			this.className = this.className.replace(pattern, "$1").replace(/ $/, "");
-		});	
+		});
+		return this;
+	},
+	
+	getStyle: function(prop){
+		var elem = this.elements[0];
+		
+		if( elem.style[prop] ){
+			return elem.style[prop];	
+		}else if( elem.currentStyle ){
+			return elem.currentStyle[prop];
+		}else{
+			prop = prop.replace(/([A-Z])/g, "-$1").toLowerCase();
+			return document.defaultView.getComputedStyle(elem, "").getPropertyValue(prop);
+		};
+	},
+	
+	hide: function(){
+		this.each(function(){
+			this.style.display = "none";	
+		});
+		return this;
+	},
+	
+	show: function(){
+		this.each(function(){
+			this.style.display = "";	
+		});
+		return this;
+	},
+	
+	on: function(evt, handler){
+		this.each(function(){
+			this["on" + evt] = handler;
+		});
+		return this;
 	}
 };
 

@@ -14,9 +14,7 @@
 		//console.log(this);
 	});
 	formFields.css({
-		"backgroundColor": "black",
-		"color": "white",
-		"padding": "5px"
+		//targetting formfields and change CSS properties here
 	});
 	
 	tardis("div").addClass("testing");
@@ -25,6 +23,20 @@
 ///homework code below///
 
 (function(){
+	
+	var header = tardis(".dssheader");
+	
+	
+	header.css({padding:"20px"})
+	var color = header.getStyle("height");
+	console.log(color);
+	
+	header.hide();
+	setTimeout(function(){
+		header.show();	
+	}, 3000);
+	
+	
 	var validationSet = {
 		//holds other objects, each object is a validation type;
 		email: {
